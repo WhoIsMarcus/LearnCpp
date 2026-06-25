@@ -1,0 +1,1 @@
+This entire folder is just me learning how to use the basics of C++, The reason I decided to start learning this is because I want to make a tensor flow machine learning like bot, completly from scratch, and I will use python but it's slow so I am learning C++ to make functions which can be ran in python. I have heard that's what a lot of packages in python do.

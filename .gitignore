@@ -1,0 +1,25 @@
+# Build outputs (C++)
+*.exe
+*.o
+*.obj
+*.out
+*.pdb
+
+# Build folders
+build/
+output/
+bin/
+
+# IDE files
+.vscode/
+.idea/
+
+# System junk
+.DS_Store
+Thumbs.db
+
+# CMake 
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
