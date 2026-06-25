@@ -40,7 +40,7 @@ struct Tensor {
 };
 
 
-Tensor add(Tensor a, Tensor b) {
+Tensor add(const Tensor& a, const Tensor& b) {
 
     Tensor result = a;
 
@@ -50,7 +50,7 @@ Tensor add(Tensor a, Tensor b) {
     return result;
 }
 
-Tensor subtract(Tensor a, Tensor b) {
+Tensor subtract(const Tensor& a, const Tensor& b) {
 
     Tensor result = a;
 
