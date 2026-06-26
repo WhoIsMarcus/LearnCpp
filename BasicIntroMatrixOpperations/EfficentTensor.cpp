@@ -92,7 +92,7 @@ struct Tensor {
     }
 };
 
-// -------------------- CORE OPERATIONS --------------------
+// Core opps
 
 Tensor add(const Tensor& a, const Tensor& b) {
     if (a.rows != b.rows || a.cols != b.cols) {
@@ -122,7 +122,7 @@ Tensor subtract(const Tensor& a, const Tensor& b) {
     return result;
 }
 
-// -------------------- MAIN --------------------
+// Main
 
 int main() {
 
