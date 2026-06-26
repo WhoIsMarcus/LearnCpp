@@ -1,5 +1,6 @@
 #include "Tensor.h"
 #include <iostream>
+#include <cmath>
 
 //Constructor from 2D vector
 Tensor::Tensor(const std::vector<std::vector<float>>& matrix_2d) {
@@ -49,6 +50,37 @@ void Tensor::print() const {
         std::cout << "\n";
     }
 }
+
+Tensor Tensor::relu() const {
+    Tensor result(rows, cols);
+
+    for (size_t i = 0; i < data.size(); i++) {
+        result.data[i] = data[i] < 0 ? 0.0f : data[i];
+    }
+
+    return result;
+}
+
+Tensor Tensor::sigmoid() const {
+    Tensor result(rows, cols);
+
+    for (size_t i = 0; i < data.size(); i++) {
+        result.data[i] = 1.0f / (1.0f + std::exp(-data[i]));
+    }
+
+    return result;
+}
+
+Tensor Tensor::tanh() const {
+    Tensor result(rows, cols);
+
+    for (size_t i = 0; i < data.size(); i++) {
+        result.data[i] = std::tanh(data[i]);
+    }
+
+    return result;
+}
+
 
 //Elementwise ops
 Tensor Tensor::operator+(const Tensor& other) const {

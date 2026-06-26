@@ -2,6 +2,7 @@
 #include "Tensor.h"
 
 int main() {
+
     Tensor a({{1, 2, 3}, {4, 5, 6}});
     Tensor b({{8, 3, 12}, {5, 6, 9}});
     Tensor c({{1, 2, 3}, {4, 5, 6}});
@@ -33,7 +34,7 @@ int main() {
     std::cout << "\nMean: " << a.mean();
 
     std::cout << "\nRow 0 sum: " << a.row_sum(0);
-    std::cout << "\nCol 1 mean: " << a.col_mean(1) << "\n";
+    std::cout << "\nCol 1 mean: " << a.col_mean(1);
 
     a += b;
     std::cout << "\nAfter +=\n" << a;
@@ -41,7 +42,9 @@ int main() {
     a -= b;
     std::cout << "\nAfter -=\n" << a;
 
-    std::cout << "Hello World I Am Marcus McCrea!";
+    std::cout << "\nReLU A:\n" << a.relu();
+    std::cout << "\nSigmoid A:\n" << a.sigmoid();
+    std::cout << "\nTanh A:\n" << a.tanh();
 
     return 0;
 }

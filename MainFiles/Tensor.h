@@ -42,6 +42,10 @@ struct Tensor {
     float col_mean(size_t c) const;
 
     Tensor transpose() const;
+
+    Tensor relu() const;
+    Tensor sigmoid() const;
+    Tensor tanh() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Tensor& t);
