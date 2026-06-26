@@ -90,6 +90,19 @@ float dot(const Point& a, const Point& b) {
     return sum;
 }
 
+Tensor scalar_multiply(float num, const Tensor& matrix) {
+
+    Tensor result(matrix.rows, matrix.cols);
+
+    for (size_t r = 0; r < matrix.rows; r++) {
+        for (size_t c = 0; c < matrix.cols; c++) {
+            result.set(r, c, matrix.get(r, c) * num);
+        }
+    }
+
+    return result;
+}
+
 Tensor multiply(const Tensor& a, const Tensor& b) {
 
     if (a.cols != b.rows) {
@@ -147,6 +160,24 @@ Tensor divide(const Tensor& a, const Tensor& b) {
     return result;
 }
 
+
+Tensor elementwise_multiply(const Tensor& a, const Tensor& b) {
+
+    if (a.rows != b.rows || a.cols != b.cols) {
+        throw runtime_error("Tensor size mismatch");
+    }
+
+    Tensor result(a.rows, a.cols);
+
+    for (size_t i = 0; i < a.rows; i++) {
+        for (size_t j = 0; j < a.cols; j++) {
+            result.set(i, j, a.get(i, j) * b.get(i, j));
+        }
+    }
+
+    return result;
+}
+
 int main() {
 
     Point a{{1, 2, 3}};
@@ -162,10 +193,20 @@ int main() {
 
     Tensor finalmult = multiply(matrix_a, matrix_b);
 
+    Tensor scalarmul = scalar_multiply(3, matrix_a);
+
 
     cout << "Dot: " << dot(a, b) << "\n";
+
     cout << "Matrix A * B:\n";
     finalmult.print();
+
     cout << "\nMatrix A / B:\n";
     finaldiv.print();
+
+    cout << "\nScalar Multiply:";
+    scalarmul.print();
+
+
+
 }
