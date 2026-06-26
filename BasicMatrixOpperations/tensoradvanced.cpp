@@ -9,6 +9,10 @@ struct Point {
     Point(const vector<float>& c) : coords(c) {}
 };
 
+
+
+
+
 struct Tensor {
     vector<float> data;
     size_t rows;
@@ -77,7 +81,62 @@ struct Tensor {
 
         return result;
     }
+
+    float row_sum(size_t r) const {
+        float sum = 0.0f;
+
+        for (size_t c = 0; c < cols; c++) {
+            sum += get(r, c);
+        }
+
+        return sum;
+    }
+
+    float col_sum(size_t c) const {
+        float sum = 0.0f;
+
+        for (size_t r = 0; r < rows; r++) {
+            sum += get(r, c);
+        }
+
+        return sum;
+    }
+
+    float sum() const {
+        float total = 0.0f;
+
+        for (float value : data) {
+            total += value;
+        }
+
+        return total;
+    }
+
+
+    float mean() const {
+        if (data.empty()) {
+            return 0.0f;
+        }
+
+        return sum() / data.size();
+    }
+
+    float row_mean(size_t r) const {
+        return row_sum(r) / cols;
+    }
+
+    float col_mean(size_t c) const {
+        return col_sum(c) / rows;
+    }
+
+
 };
+
+
+
+//Function with tensors
+
+
 
 float dot(const Point& a, const Point& b) {
     float sum = 0.0f;
@@ -178,6 +237,9 @@ Tensor elementwise_multiply(const Tensor& a, const Tensor& b) {
     return result;
 }
 
+
+
+
 int main() {
 
     Point a{{1, 2, 3}};
@@ -189,24 +251,78 @@ int main() {
     Tensor matrix_c({{1,2,3},{4,5,6}});
     Tensor matrix_d({{1,1,1},{2,2,2}});
 
-    Tensor finaldiv = divide(matrix_c, matrix_d);
+    //Dot product
+    cout << "Dot Product:\n";
+    cout << dot(a, b) << "\n\n";
 
+    //Original matrix
+    cout << "Matrix A:\n";
+    matrix_a.print();
+
+    //Matrix multiplication
+    cout << "\nMatrix A * B:\n";
     Tensor finalmult = multiply(matrix_a, matrix_b);
-
-    Tensor scalarmul = scalar_multiply(3, matrix_a);
-
-
-    cout << "Dot: " << dot(a, b) << "\n";
-
-    cout << "Matrix A * B:\n";
     finalmult.print();
 
-    cout << "\nMatrix A / B:\n";
+    //Element-wise division
+    cout << "\nMatrix C / D:\n";
+    Tensor finaldiv = divide(matrix_c, matrix_d);
     finaldiv.print();
 
-    cout << "\nScalar Multiply:";
+    //Element-wise multiplication
+    cout << "\nMatrix C element-wise * D:\n";
+    Tensor elem = elementwise_multiply(matrix_c, matrix_d);
+    elem.print();
+
+    //Scalar multiplication
+    cout << "\nMatrix A * 3:\n";
+    Tensor scalarmul = scalar_multiply(3, matrix_a);
     scalarmul.print();
 
+    //Transpose
+    cout << "\nTranspose of Matrix A:\n";
+    Tensor trans = matrix_a.transpose();
+    trans.print();
 
+    //Get one element
+    cout << "\nElement (1,2): ";
+    cout << matrix_a.get(1, 2) << endl;
 
+    //Get row
+    cout << "\nRow 0:\n";
+    for (float x : matrix_a.getRow(0))
+        cout << x << " ";
+    cout << endl;
+
+    //Get column
+    cout << "\nColumn 1:\n";
+    for (float x : matrix_a.getCol(1))
+        cout << x << " ";
+    cout << endl;
+
+    //Modify one element
+    cout << "\nset() example:\n";
+    Tensor modified = matrix_a;
+    modified.set(0, 0, 100);
+    modified.print();
+
+    //Statistics
+    cout << "\nSum: " << matrix_a.sum() << endl;
+    cout << "Mean: " << matrix_a.mean() << endl;
+
+    cout << "\nRow 0 Sum: " << matrix_a.row_sum(0) << endl;
+    cout << "Row 1 Sum: " << matrix_a.row_sum(1) << endl;
+
+    cout << "\nColumn 0 Sum: " << matrix_a.col_sum(0) << endl;
+    cout << "Column 1 Sum: " << matrix_a.col_sum(1) << endl;
+    cout << "Column 2 Sum: " << matrix_a.col_sum(2) << endl;
+
+    cout << "\nRow 0 Mean: " << matrix_a.row_mean(0) << endl;
+    cout << "Row 1 Mean: " << matrix_a.row_mean(1) << endl;
+
+    cout << "\nColumn 0 Mean: " << matrix_a.col_mean(0) << endl;
+    cout << "Column 1 Mean: " << matrix_a.col_mean(1) << endl;
+    cout << "Column 2 Mean: " << matrix_a.col_mean(2) << endl;
+
+    return 0;
 }
