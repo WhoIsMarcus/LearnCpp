@@ -65,6 +65,18 @@ struct Tensor {
         }
         return col;
     }
+
+    Tensor transpose() const {
+        Tensor result(cols, rows);
+
+        for (size_t r = 0; r < rows; r++) {
+            for (size_t c = 0; c < cols; c++) {
+                result.set(c, r, get(r, c));
+            }
+        }
+
+        return result;
+    }
 };
 
 float dot(const Point& a, const Point& b) {
