@@ -80,6 +80,12 @@ float dot(const Point& a, const Point& b) {
 
 Tensor multiply(const Tensor& a, const Tensor& b) {
 
+    if (a.cols != b.rows) {
+        throw runtime_error("Tensor size mismatch");
+    }
+
+
+
     Tensor result(a.rows, b.cols);
 
     for (size_t i = 0; i < a.rows; i++) {
@@ -104,6 +110,31 @@ Tensor multiply(const Tensor& a, const Tensor& b) {
     return result;
 }
 
+
+Tensor divide(const Tensor& a, const Tensor& b) {
+
+    if (a.rows != b.rows || a.cols != b.cols) {
+        throw runtime_error("Tensor size mismatch");
+    }
+
+    Tensor result(a.rows, a.cols);
+
+    for (size_t i = 0; i < a.rows; i++) {
+        for (size_t j = 0; j < a.cols; j++) {
+
+            float denom = b.get(i, j);
+
+            if (denom == 0) {
+                throw runtime_error("Division by zero");
+            }
+
+            result.set(i, j, a.get(i, j) / denom);
+        }
+    }
+
+    return result;
+}
+
 int main() {
 
     Point a{{1, 2, 3}};
@@ -112,9 +143,17 @@ int main() {
     Tensor matrix_a({{2, 8, 3}, {5, 4, 1}});
     Tensor matrix_b({{4, 1}, {6, 3}, {2, 4}});
 
+    Tensor matrix_c({{1,2,3},{4,5,6}});
+    Tensor matrix_d({{1,1,1},{2,2,2}});
+
+    Tensor finaldiv = divide(matrix_c, matrix_d);
+
     Tensor finalmult = multiply(matrix_a, matrix_b);
+
 
     cout << "Dot: " << dot(a, b) << "\n";
     cout << "Matrix A * B:\n";
     finalmult.print();
+    cout << "\nMatrix A / B:\n";
+    finaldiv.print();
 }
