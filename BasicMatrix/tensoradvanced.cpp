@@ -43,7 +43,36 @@ struct Tensor {
         }
     }
 
+
+    vector<float> getRow(int r) const {
+        vector<float> row;
+        for (int c = 0; c < cols; c++) {
+            row.push_back(get(r, c));
+        }
+        return row;
+    }
+
+    vector<float> getCol(int c) const {
+        vector<float> col;
+        for (int r = 0; r < rows; r++) {
+            col.push_back(get(r, c));
+        }
+        return col;
+    }
+
+    Tensor(int r, int c) { //Blank tensor
+        rows = r;
+        cols = c;
+        data.resize(r * c, 0.0f);
+    }
+
+    void set(int r, int c, float val) { //set items to value
+        data[r * cols + c] = val;
+    }
+
+
 };
+
 
 
 float dot(const Point& a, const Point& b){
@@ -54,10 +83,50 @@ float dot(const Point& a, const Point& b){
     return final;
 }
 
+
+
+Tensor multiply(const Tensor& a, const Tensor& b) {
+
+    Tensor result(a.rows, b.cols);
+
+    for (size_t i = 0; i < a.rows; i++) {
+
+        vector<float> rowA = a.getRow(i);
+
+        for (size_t j = 0; j < b.cols; j++) {
+
+            vector<float> colB = b.getCol(j);
+
+            float sum = 0.0f;
+            for (size_t k = 0; k < rowA.size(); k++) {
+                sum += rowA[k] * colB[k];
+            }
+
+            result.set(i, j, sum);
+        }
+    }
+
+    return result;
+}
+
+
+
+
 int main() {
 
     Point a{{1, 2, 3}};
     Point b{{3, 4, 5}};
 
-    cout << dot(a, b);
+    Tensor matrix_a({{2, 8, 3}, {5, 4, 1}});
+    Tensor matrix_b({{4, 1}, {6, 3}, {2, 4}});
+
+    Tensor finalmult = multiply(matrix_a, matrix_b);
+
+    Tensor My_tensor({{1, 2}, {3, 4}});
+
+    cout << "Dot:" << dot(a, b) << "\n";
+    cout << "Matrix A*B: \n";
+    finalmult.print();
+
+
 }
