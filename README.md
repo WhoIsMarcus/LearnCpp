@@ -4,3 +4,5 @@ Structure (For now):
 
 the folder MainFiles contains all the files which I have deemed as fully fleshed out code, which is "ready" for deployment, I put ready in quotes because I am sure there's much I could fix. any other files contain "scratch work" and are all just for me to get the genral ideas down.
 
+
+
